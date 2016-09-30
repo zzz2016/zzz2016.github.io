@@ -84,20 +84,12 @@
 
 
 
-<meta name="description" content="写在前面滑动视图导航是APP中经常用到的一种视图，自己之前也造过相关的轮子。
-偶然间发现了TYPagerController这个第三方库，其加入了NSCache对ScrollView的性能进行了优化，很值得学习，所以便有了此文来记录，方便日后查看。
-在其首页上有具体的效果演示，在这里我就不多做介绍了。
-看完本系列文章，我相信大家都能写一个自己的导航控制了。
-一、总体介绍这就是一个常见的滑动导航控制">
+<meta name="description" content="序滑动视图导航是APP中经常用到的一种视图，自己之前也造过相关的轮子。偶然间发现了TYPagerController这个第三方库，其加入了NSCache对ScrollView的性能进行了优化，很值得学习，所以便有了此文来记录，方便日后查看。在其首页上有具体的效果演示，在这里我就不多做介绍了。看完本系列文章，我相信大家都能写一个自己的导航控制了。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="APP常见的滑动导航实现：TYPagerController源码分析（一）">
 <meta property="og:url" content="http://yoursite.com/2016/09/30/APP常见的滑动导航实现：TYPagerController源码分析（一）/index.html">
 <meta property="og:site_name" content="ZZZ's「Home」">
-<meta property="og:description" content="写在前面滑动视图导航是APP中经常用到的一种视图，自己之前也造过相关的轮子。
-偶然间发现了TYPagerController这个第三方库，其加入了NSCache对ScrollView的性能进行了优化，很值得学习，所以便有了此文来记录，方便日后查看。
-在其首页上有具体的效果演示，在这里我就不多做介绍了。
-看完本系列文章，我相信大家都能写一个自己的导航控制了。
-一、总体介绍这就是一个常见的滑动导航控制">
+<meta property="og:description" content="序滑动视图导航是APP中经常用到的一种视图，自己之前也造过相关的轮子。偶然间发现了TYPagerController这个第三方库，其加入了NSCache对ScrollView的性能进行了优化，很值得学习，所以便有了此文来记录，方便日后查看。在其首页上有具体的效果演示，在这里我就不多做介绍了。看完本系列文章，我相信大家都能写一个自己的导航控制了。">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1968535-ff2fb55b207ba8ce.gif?imageMogr2/auto-orient/strip">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1968535-6848d32afdf05871.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1968535-d2674277f3c63c79.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
@@ -117,14 +109,10 @@
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1968535-b610fe6dc94fe1e3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1968535-8d258f3ab07f1463.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1968535-1a92214c9aeb0379.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2016-09-30T05:49:25.000Z">
+<meta property="og:updated_time" content="2016-09-30T06:08:04.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="APP常见的滑动导航实现：TYPagerController源码分析（一）">
-<meta name="twitter:description" content="写在前面滑动视图导航是APP中经常用到的一种视图，自己之前也造过相关的轮子。
-偶然间发现了TYPagerController这个第三方库，其加入了NSCache对ScrollView的性能进行了优化，很值得学习，所以便有了此文来记录，方便日后查看。
-在其首页上有具体的效果演示，在这里我就不多做介绍了。
-看完本系列文章，我相信大家都能写一个自己的导航控制了。
-一、总体介绍这就是一个常见的滑动导航控制">
+<meta name="twitter:description" content="序滑动视图导航是APP中经常用到的一种视图，自己之前也造过相关的轮子。偶然间发现了TYPagerController这个第三方库，其加入了NSCache对ScrollView的性能进行了优化，很值得学习，所以便有了此文来记录，方便日后查看。在其首页上有具体的效果演示，在这里我就不多做介绍了。看完本系列文章，我相信大家都能写一个自己的导航控制了。">
 <meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1968535-ff2fb55b207ba8ce.gif?imageMogr2/auto-orient/strip">
 
 
@@ -337,10 +325,8 @@
       
 
       
-        <h1 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h1><p>滑动视图导航是APP中经常用到的一种视图，自己之前也造过相关的轮子。</p>
-<p>偶然间发现了<a href="https://github.com/12207480/TYPagerController" target="_blank" rel="external">TYPagerController</a>这个第三方库，其加入了NSCache对ScrollView的性能进行了优化，很值得学习，所以便有了此文来记录，方便日后查看。</p>
-<p>在其首页上有具体的效果演示，在这里我就不多做介绍了。</p>
-<p>看完本系列文章，我相信大家都能写一个自己的导航控制了。</p>
+        <h1 id="序"><a href="#序" class="headerlink" title="序"></a>序</h1><p>滑动视图导航是APP中经常用到的一种视图，自己之前也造过相关的轮子。<br>偶然间发现了<a href="https://github.com/12207480/TYPagerController" target="_blank" rel="external">TYPagerController</a>这个第三方库，其加入了NSCache对ScrollView的性能进行了优化，很值得学习，所以便有了此文来记录，方便日后查看。<br>在其首页上有具体的效果演示，在这里我就不多做介绍了。<br>看完本系列文章，我相信大家都能写一个自己的导航控制了。</p>
+<a id="more"></a>
 <h1 id="一、总体介绍"><a href="#一、总体介绍" class="headerlink" title="一、总体介绍"></a>一、总体介绍</h1><p>这就是一个常见的滑动导航控制器：</p>
 <p><img src="http://upload-images.jianshu.io/upload_images/1968535-ff2fb55b207ba8ce.gif?imageMogr2/auto-orient/strip" alt=""></p>
 <h2 id="1-1-滑动导航视图控制器的总体构成"><a href="#1-1-滑动导航视图控制器的总体构成" class="headerlink" title="1.1 滑动导航视图控制器的总体构成"></a>1.1 滑动导航视图控制器的总体构成</h2><p>主要分两个部分：</p>
@@ -632,7 +618,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#写在前面"><span class="nav-text">写在前面</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#一、总体介绍"><span class="nav-text">一、总体介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-滑动导航视图控制器的总体构成"><span class="nav-text">1.1 滑动导航视图控制器的总体构成</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-TYPagerController整体介绍"><span class="nav-text">1.2 TYPagerController整体介绍</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二、TYPagerController基类介绍"><span class="nav-text">二、TYPagerController基类介绍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三、代理协议"><span class="nav-text">三、代理协议</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#四、TYPagerController基类流程分析"><span class="nav-text">四、TYPagerController基类流程分析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#4-1-init"><span class="nav-text">4.1 init</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-2-Life-Cycle"><span class="nav-text">4.2 Life Cycle</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-1-updateContentViewIfNeeded："><span class="nav-text">4.2.1 updateContentViewIfNeeded：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-2-updateContentView："><span class="nav-text">4.2.2 updateContentView：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#小小结"><span class="nav-text">小小结</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-3-layoutSubViewsInContentView"><span class="nav-text">4.2.3 layoutSubViewsInContentView</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#addControllersInVisibleRange"><span class="nav-text">addControllersInVisibleRange</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#removeControllersOutOfVisibleRange"><span class="nav-text">removeControllersOutOfVisibleRange</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-3-滑动逻辑处理"><span class="nav-text">4.3 滑动逻辑处理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#scrollViewDidScroll"><span class="nav-text">scrollViewDidScroll</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#configurePagerIndexByScrollProgress"><span class="nav-text">configurePagerIndexByScrollProgress</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#configurePagerIndex"><span class="nav-text">configurePagerIndex</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#五、总结"><span class="nav-text">五、总结</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#序"><span class="nav-text">序</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#一、总体介绍"><span class="nav-text">一、总体介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-滑动导航视图控制器的总体构成"><span class="nav-text">1.1 滑动导航视图控制器的总体构成</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-TYPagerController整体介绍"><span class="nav-text">1.2 TYPagerController整体介绍</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二、TYPagerController基类介绍"><span class="nav-text">二、TYPagerController基类介绍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三、代理协议"><span class="nav-text">三、代理协议</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#四、TYPagerController基类流程分析"><span class="nav-text">四、TYPagerController基类流程分析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#4-1-init"><span class="nav-text">4.1 init</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-2-Life-Cycle"><span class="nav-text">4.2 Life Cycle</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-1-updateContentViewIfNeeded："><span class="nav-text">4.2.1 updateContentViewIfNeeded：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-2-updateContentView："><span class="nav-text">4.2.2 updateContentView：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#小小结"><span class="nav-text">小小结</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-3-layoutSubViewsInContentView"><span class="nav-text">4.2.3 layoutSubViewsInContentView</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#addControllersInVisibleRange"><span class="nav-text">addControllersInVisibleRange</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#removeControllersOutOfVisibleRange"><span class="nav-text">removeControllersOutOfVisibleRange</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-3-滑动逻辑处理"><span class="nav-text">4.3 滑动逻辑处理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#scrollViewDidScroll"><span class="nav-text">scrollViewDidScroll</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#configurePagerIndexByScrollProgress"><span class="nav-text">configurePagerIndexByScrollProgress</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#configurePagerIndex"><span class="nav-text">configurePagerIndex</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#五、总结"><span class="nav-text">五、总结</span></a></li></ol></div>
             
           </div>
         </section>
