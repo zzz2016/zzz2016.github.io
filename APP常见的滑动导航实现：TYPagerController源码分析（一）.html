@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="滑动导航," />
+  <meta name="keywords" content="Hexo, NexT" />
 
 
 
@@ -84,20 +84,16 @@
 
 
 
-<meta name="description" content="写在前面滑动视图导航是APP中经常用到的一种视图，自己之前也造过相关的轮子。
-偶然间发现了TYPagerController这个第三方库，其加入了NSCache对ScrollView的性能进行了优化，很值得学习，所以便有了此文来记录，方便日后查看。
-在其首页上有具体的效果演示，在这里我就不多做介绍了。
+<meta name="description" content="写在前面滑动视图导航是APP中经常用到的一种视图，自己之前也造过相关的轮子。偶然间发现了TYPagerController这个第三方库，其加入了NSCache对ScrollView的性能进行了优化，很值得学习，所以便有了此文来记录，方便日后查看。在其首页上有具体的效果演示，在这里我就不多做介绍了。
 看完本系列文章，我相信大家都能写一个自己的导航控制了。
-一、总体介绍这就是一个常见的滑动导航控制">
-<meta property="og:type" content="article">
-<meta property="og:title" content="APP常见的滑动导航实现：TYPagerController源码分析（一）">
-<meta property="og:url" content="http://yoursite.com/2016/09/30/APP常见的滑动导航实现：TYPagerController源码分析（一）/index.html">
+一、总体介绍这就是一个常见的滑动导航控制器：">
+<meta property="og:type" content="website">
+<meta property="og:title" content="ZZZ's「Home」">
+<meta property="og:url" content="http://yoursite.com/APP常见的滑动导航实现：TYPagerController源码分析（一）.html">
 <meta property="og:site_name" content="ZZZ's「Home」">
-<meta property="og:description" content="写在前面滑动视图导航是APP中经常用到的一种视图，自己之前也造过相关的轮子。
-偶然间发现了TYPagerController这个第三方库，其加入了NSCache对ScrollView的性能进行了优化，很值得学习，所以便有了此文来记录，方便日后查看。
-在其首页上有具体的效果演示，在这里我就不多做介绍了。
+<meta property="og:description" content="写在前面滑动视图导航是APP中经常用到的一种视图，自己之前也造过相关的轮子。偶然间发现了TYPagerController这个第三方库，其加入了NSCache对ScrollView的性能进行了优化，很值得学习，所以便有了此文来记录，方便日后查看。在其首页上有具体的效果演示，在这里我就不多做介绍了。
 看完本系列文章，我相信大家都能写一个自己的导航控制了。
-一、总体介绍这就是一个常见的滑动导航控制">
+一、总体介绍这就是一个常见的滑动导航控制器：">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1968535-ff2fb55b207ba8ce.gif?imageMogr2/auto-orient/strip">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1968535-6848d32afdf05871.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1968535-d2674277f3c63c79.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
@@ -117,14 +113,12 @@
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1968535-b610fe6dc94fe1e3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1968535-8d258f3ab07f1463.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1968535-1a92214c9aeb0379.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2016-09-30T05:49:25.000Z">
+<meta property="og:updated_time" content="2016-09-30T02:37:46.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="APP常见的滑动导航实现：TYPagerController源码分析（一）">
-<meta name="twitter:description" content="写在前面滑动视图导航是APP中经常用到的一种视图，自己之前也造过相关的轮子。
-偶然间发现了TYPagerController这个第三方库，其加入了NSCache对ScrollView的性能进行了优化，很值得学习，所以便有了此文来记录，方便日后查看。
-在其首页上有具体的效果演示，在这里我就不多做介绍了。
+<meta name="twitter:title" content="ZZZ's「Home」">
+<meta name="twitter:description" content="写在前面滑动视图导航是APP中经常用到的一种视图，自己之前也造过相关的轮子。偶然间发现了TYPagerController这个第三方库，其加入了NSCache对ScrollView的性能进行了优化，很值得学习，所以便有了此文来记录，方便日后查看。在其首页上有具体的效果演示，在这里我就不多做介绍了。
 看完本系列文章，我相信大家都能写一个自己的导航控制了。
-一、总体介绍这就是一个常见的滑动导航控制">
+一、总体介绍这就是一个常见的滑动导航控制器：">
 <meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1968535-ff2fb55b207ba8ce.gif?imageMogr2/auto-orient/strip">
 
 
@@ -146,9 +140,15 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2016/09/30/APP常见的滑动导航实现：TYPagerController源码分析（一）/"/>
+  <link rel="canonical" href="http://yoursite.com/APP常见的滑动导航实现：TYPagerController源码分析（一）.html"/>
 
-  <title> APP常见的滑动导航实现：TYPagerController源码分析（一） | ZZZ's「Home」 </title>
+  <title>
+  
+
+  
+     | ZZZ's「Home」
+  
+</title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -169,7 +169,7 @@
     
   
 
-  <div class="container one-collumn sidebar-position-left page-post-detail ">
+  <div class="container one-collumn sidebar-position-left  ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -259,91 +259,11 @@
 
   <div id="posts" class="posts-expand">
     
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
     
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                APP常见的滑动导航实现：TYPagerController源码分析（一）
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-09-30T13:43:32+08:00" content="2016-09-30">
-              2016-09-30
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/源码分析/" itemprop="url" rel="index">
-                    <span itemprop="name">源码分析</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        <h1 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h1><p>滑动视图导航是APP中经常用到的一种视图，自己之前也造过相关的轮子。</p>
-<p>偶然间发现了<a href="https://github.com/12207480/TYPagerController" target="_blank" rel="external">TYPagerController</a>这个第三方库，其加入了NSCache对ScrollView的性能进行了优化，很值得学习，所以便有了此文来记录，方便日后查看。</p>
-<p>在其首页上有具体的效果演示，在这里我就不多做介绍了。</p>
+      <h4 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h4><p>滑动视图导航是APP中经常用到的一种视图，自己之前也造过相关的轮子。<br>偶然间发现了<a href="https://github.com/12207480/TYPagerController" target="_blank" rel="external">TYPagerController</a>这个第三方库，其加入了NSCache对ScrollView的性能进行了优化，很值得学习，所以便有了此文来记录，方便日后查看。<br>在其首页上有具体的效果演示，在这里我就不多做介绍了。</p>
 <p>看完本系列文章，我相信大家都能写一个自己的导航控制了。</p>
-<h1 id="一、总体介绍"><a href="#一、总体介绍" class="headerlink" title="一、总体介绍"></a>一、总体介绍</h1><p>这就是一个常见的滑动导航控制器：</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1968535-ff2fb55b207ba8ce.gif?imageMogr2/auto-orient/strip" alt=""></p>
-<h2 id="1-1-滑动导航视图控制器的总体构成"><a href="#1-1-滑动导航视图控制器的总体构成" class="headerlink" title="1.1 滑动导航视图控制器的总体构成"></a>1.1 滑动导航视图控制器的总体构成</h2><p>主要分两个部分：</p>
+<h2 id="一、总体介绍"><a href="#一、总体介绍" class="headerlink" title="一、总体介绍"></a>一、总体介绍</h2><p>这就是一个常见的滑动导航控制器：<br><img src="http://upload-images.jianshu.io/upload_images/1968535-ff2fb55b207ba8ce.gif?imageMogr2/auto-orient/strip" alt=""></p>
+<h3 id="1-1-滑动导航视图控制器的总体构成"><a href="#1-1-滑动导航视图控制器的总体构成" class="headerlink" title="1.1 滑动导航视图控制器的总体构成"></a>1.1 滑动导航视图控制器的总体构成</h3><p>主要分两个部分：</p>
 <ul>
 <li>上方的TabBar（CollectionCell、UnderLineView构成）</li>
 <li>下方的ScrollView（ViewControllerView构成）</li>
@@ -354,37 +274,33 @@
 <li>根据数据源Titles对上方TabBar中CollectionCell上的Label赋值</li>
 <li>处理下方ScorllView与上方TabBar之间的协同问题</li>
 </ol>
-<p>这里面有几个坑：</p>
-<p>流程1会存在比较严重的性能问题；</p>
-<p>流程3需要规划在相应的处理方法中做正确的事情。</p>
-<h2 id="1-2-TYPagerController整体介绍"><a href="#1-2-TYPagerController整体介绍" class="headerlink" title="1.2 TYPagerController整体介绍"></a>1.2 TYPagerController整体介绍</h2><p>TYPagerController针对上文提到的流程1、3存在的问题做出了相应的改进，也是我们需要重点关注的地方：</p>
+<p>这里面有几个坑：<br>流程1会存在比较严重的性能问题；<br>流程3需要规划在相应的处理方法中做正确的事情。</p>
+<h3 id="1-2-TYPagerController整体介绍"><a href="#1-2-TYPagerController整体介绍" class="headerlink" title="1.2 TYPagerController整体介绍"></a>1.2 TYPagerController整体介绍</h3><p>TYPagerController针对上文提到的流程1、3存在的问题做出了相应的改进，也是我们需要重点关注的地方：</p>
 <ul>
 <li>通过Cache对ScrollView进行性能优化</li>
 <li>处理好协同关系</li>
 </ul>
-<p>其整体是自上而下的继承关系：</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1968535-6848d32afdf05871.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-<p>其中：</p>
+<p>其整体是自上而下的继承关系：<br><img src="http://upload-images.jianshu.io/upload_images/1968535-6848d32afdf05871.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br>其中：</p>
 <ul>
 <li>TYPagerController，基类，继承自UIViewController，其本质就是一个自定义的ScrollViewController</li>
 <li>TYTabPagerController，在基类的基础上，增加了头部TabBar（本质是一个CollectionView）</li>
 <li>TYTabButtonPagerController，为头部TabBar注册了一个常用的Cell</li>
 </ul>
 <p>我们一般直接用TYTabButtonPagerController就可以了，如果有自定义cell的需求，可以使用TYTabPagerController注册自己的cell。</p>
-<h1 id="二、TYPagerController基类介绍"><a href="#二、TYPagerController基类介绍" class="headerlink" title="二、TYPagerController基类介绍"></a>二、TYPagerController基类介绍</h1><p>实现一个滑动导航，如果不加头部的切换TabBar，思路跟初始化一般的ScrollView是一样：</p>
+<h2 id="二、TYPagerController基类介绍"><a href="#二、TYPagerController基类介绍" class="headerlink" title="二、TYPagerController基类介绍"></a>二、TYPagerController基类介绍</h2><p>实现一个滑动导航，如果不加头部的切换TabBar，思路跟初始化一般的ScrollView是一样：</p>
 <ol>
 <li>初始化ScrollView</li>
 <li>根据需要显示的页面数量和宽度（一般是一整个屏幕宽度），确定ContentView的Frame</li>
 </ol>
 <p>TYPagerController基类，在此基础上，加入了缓存、代理和总体逻辑流程控制。</p>
 <p>其中，缓存部分就是很简单的使用了NSCache，代理我们简单介绍一下，主要是看一下作者对滑动试图导航的流程控制是怎样的。</p>
-<h1 id="三、代理协议"><a href="#三、代理协议" class="headerlink" title="三、代理协议"></a>三、代理协议</h1><p>协议部分，跟常用的tableView一个思路，定义数据源和代理：</p>
+<h2 id="三、代理协议"><a href="#三、代理协议" class="headerlink" title="三、代理协议"></a>三、代理协议</h2><p>协议部分，跟常用的tableView一个思路，定义数据源和代理：</p>
 <p><img src="http://upload-images.jianshu.io/upload_images/1968535-d2674277f3c63c79.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
 <ul>
 <li>dataSource：提供与index对应的VC</li>
 <li>delegate：处理transition相关逻辑</li>
 </ul>
-<h1 id="四、TYPagerController基类流程分析"><a href="#四、TYPagerController基类流程分析" class="headerlink" title="四、TYPagerController基类流程分析"></a>四、TYPagerController基类流程分析</h1><p>本章共计三部分，重点在2、3部分：</p>
+<h2 id="四、TYPagerController基类流程分析"><a href="#四、TYPagerController基类流程分析" class="headerlink" title="四、TYPagerController基类流程分析"></a>四、TYPagerController基类流程分析</h2><p>本章共计三部分，重点在2、3部分：</p>
 <ol>
 <li>init</li>
 <li>LifeCycle</li>
@@ -393,41 +309,38 @@
 <p>原作者对部分子方法和参数的命名容易产生歧义，所以我对其进行了一部分重构，这样大家读起来会顺畅一些。</p>
 <p>初始化布局阶段，整体流程是这样的：</p>
 <p><img src="http://upload-images.jianshu.io/upload_images/1968535-1faa4b67987dce93.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-<h2 id="4-1-init"><a href="#4-1-init" class="headerlink" title="4.1 init"></a>4.1 init</h2><p>初始化部分很简单，就是对一些必要的数据进行赋值：</p>
+<h3 id="4-1-init"><a href="#4-1-init" class="headerlink" title="4.1 init"></a>4.1 init</h3><p>初始化部分很简单，就是对一些必要的数据进行赋值：</p>
 <p><img src="http://upload-images.jianshu.io/upload_images/1968535-939c6743d80ea357.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-<h2 id="4-2-Life-Cycle"><a href="#4-2-Life-Cycle" class="headerlink" title="4.2 Life Cycle"></a>4.2 Life Cycle</h2><p>生命周期这部分，主要是初始化ScrollView，根据dataSource进行布局。</p>
+<h3 id="4-2-Life-Cycle"><a href="#4-2-Life-Cycle" class="headerlink" title="4.2 Life Cycle"></a>4.2 Life Cycle</h3><p>生命周期这部分，主要是初始化ScrollView，根据dataSource进行布局。</p>
 <p><img src="http://upload-images.jianshu.io/upload_images/1968535-7be16a8fbc29da53.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-<h3 id="4-2-1-updateContentViewIfNeeded："><a href="#4-2-1-updateContentViewIfNeeded：" class="headerlink" title="4.2.1 updateContentViewIfNeeded："></a>4.2.1 updateContentViewIfNeeded：</h3><ul>
+<p>####4.2.1 updateContentViewIfNeeded：</p>
+<ul>
 <li>作用：根据contentView.frame.size判断，是否已经update过ContentView了。</li>
 <li>实现：比较对象是一个设定值，下文resizeContentView的时候，会对contentView的frame设置这个值。</li>
 <li>存在理由：避免计算资源浪费。</li>
 </ul>
 <p><img src="http://upload-images.jianshu.io/upload_images/1968535-1f3b239b60a9a396.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-<h3 id="4-2-2-updateContentView："><a href="#4-2-2-updateContentView：" class="headerlink" title="4.2.2 updateContentView："></a>4.2.2 updateContentView：</h3><ul>
+<p>####4.2.2 updateContentView：</p>
+<ul>
 <li>作用：调整ContentView（ScrollView）布局</li>
 <li>实现：从dataSource获取到ViewControllers的数量，进而计算ScrollView的ContentSize。</li>
 </ul>
 <p><img src="http://upload-images.jianshu.io/upload_images/1968535-478e995b0253dafb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
 <p><img src="http://upload-images.jianshu.io/upload_images/1968535-c44ab14609f27828.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-<h3 id="小小结"><a href="#小小结" class="headerlink" title="小小结"></a>小小结</h3><p>至此呢，作者做的事情跟传统使用ScrollView的思路是一模一样的（初始化Scrollview，配置contentSize），只不过中间加入了对statusBar高度适应方面的判断。</p>
-<h3 id="4-2-3-layoutSubViewsInContentView"><a href="#4-2-3-layoutSubViewsInContentView" class="headerlink" title="4.2.3 layoutSubViewsInContentView"></a>4.2.3 layoutSubViewsInContentView</h3><ul>
+<h4 id="小小结"><a href="#小小结" class="headerlink" title="小小结"></a>小小结</h4><p>至此呢，作者做的事情跟传统使用ScrollView的思路是一模一样的（初始化Scrollview，配置contentSize），只不过中间加入了对statusBar高度适应方面的判断。</p>
+<h4 id="4-2-3-layoutSubViewsInContentView"><a href="#4-2-3-layoutSubViewsInContentView" class="headerlink" title="4.2.3 layoutSubViewsInContentView"></a>4.2.3 layoutSubViewsInContentView</h4><ul>
 <li>作用：添加Subviews至ContentView（ScrollView）</li>
 <li>实现：仅显示需要显示的VC，并利用Cache避免VC的销毁</li>
 </ul>
-<p>###讨论</p>
-<p>scrollView的contentSize确定下来以后，就需要添加subviews了。</p>
-<p>这时候，最简单的做法就是，一次性添加所有subviews到scrollView上。</p>
-<p><strong>但是这样会带来很严重的内存占用</strong>（想象一下你有30个tableview，每个tableview有1000+的cell）。</p>
+<p>####讨论</p>
+<p>scrollView的contentSize确定下来以后，就需要添加subviews了。<br>这时候，最简单的做法就是，一次性添加所有subviews到scrollView上。<br><strong>但是这样会带来很严重的内存占用</strong>（想象一下你有30个tableview，每个tableview有1000+的cell）。</p>
 <p>这时候就需要更好的解决办法，我们只添加需要显示的subviews就是了：</p>
 <ol>
 <li>确定一个需要显示的index range（滑动过程中，需要显示的VC将不止一个，所以需要一个range）</li>
 <li>移除range外的VC，只显示range范围内的VC</li>
 </ol>
-<p>这样做的好处，自然是节省内存；</p>
-<p>但带来的问题则是，需要反复的init、dealloc我们的ViewController，带来不必要的性能损失。</p>
-<p>解决办法呢，加入缓存呗。</p>
-<p>使用NSCache也好，自己创建Dict也好，能避免我们的ViewController被销毁就行。</p>
-<p>这样修改之后的大体流程是这样的：</p>
+<p>这样做的好处，自然是节省内存；<br>但带来的问题则是，需要反复的init、dealloc我们的ViewController，带来不必要的性能损失。</p>
+<p>解决办法呢，加入缓存呗。<br>使用NSCache也好，自己创建Dict也好，能避免我们的ViewController被销毁就行。<br>这样修改之后的大体流程是这样的：</p>
 <ol>
 <li>确定一个需要显示的index range</li>
 <li>根据index从visibleVCs、Cache或者DataSource中获取VC</li>
@@ -438,23 +351,20 @@
 <p>加入缓存之后，我们的ViewController不会被反复的init、alloc，同时也会显著降低内存占用（ViewController的View没有加入视图层级中）。</p>
 <p>我们来看一下具体的代码：</p>
 <p><img src="http://upload-images.jianshu.io/upload_images/1968535-f77b0cc99e846b46.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-<p>其中，内联函数可能有的童鞋不了解，其可以理解为宏定义，只不过内联函数在宏定义的基础上，加入了返回值校验等等一般函数具有的功能的同时，可以避免函数入栈操作，从而节省开支。</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1968535-76df2b33f907a9e0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-<p>从上面的代码可以看出，该函数主要是根据offset和width计算出visibleRange。</p>
-<p>后面ScrollView的代理方法中，会在滑动过程中实时的调用这个内联函数，计算出range数据，然后再根据range进行添加删除VC的操作。</p>
-<h3 id="addControllersInVisibleRange"><a href="#addControllersInVisibleRange" class="headerlink" title="addControllersInVisibleRange"></a>addControllersInVisibleRange</h3><ul>
+<p>其中，内联函数可能有的童鞋不了解，其可以理解为宏定义，只不过内联函数在宏定义的基础上，加入了返回值校验等等一般函数具有的功能的同时，可以避免函数入栈操作，从而节省开支。<br><img src="http://upload-images.jianshu.io/upload_images/1968535-76df2b33f907a9e0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>从上面的代码可以看出，该函数主要是根据offset和width计算出visibleRange。<br>后面ScrollView的代理方法中，会在滑动过程中实时的调用这个内联函数，计算出range数据，然后再根据range进行添加删除VC的操作。</p>
+<h4 id="addControllersInVisibleRange"><a href="#addControllersInVisibleRange" class="headerlink" title="addControllersInVisibleRange"></a>addControllersInVisibleRange</h4><ul>
 <li>作用：添加VC至ContentView</li>
 <li>实现：从VisibleVCs、Cache或dataSource处获得VC，加入到ScrollView上，并分情况将其记录到visibleVCs、Cache中</li>
 </ul>
 <p><img src="http://upload-images.jianshu.io/upload_images/1968535-51b1d147606be2d8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-<h3 id="removeControllersOutOfVisibleRange"><a href="#removeControllersOutOfVisibleRange" class="headerlink" title="removeControllersOutOfVisibleRange"></a>removeControllersOutOfVisibleRange</h3><ul>
+<h4 id="removeControllersOutOfVisibleRange"><a href="#removeControllersOutOfVisibleRange" class="headerlink" title="removeControllersOutOfVisibleRange"></a>removeControllersOutOfVisibleRange</h4><ul>
 <li>作用：删除可视范围外的VC</li>
 <li>实现：分别从VisibleVCs、视图树以及VC树中删除符合条件（outof）的VC</li>
 </ul>
 <p><img src="http://upload-images.jianshu.io/upload_images/1968535-2f9ed4be289c1df8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
 <p>至此，init及life Cycle的分析已经完成了，接下来是运行时的交互部分了。</p>
-<h2 id="4-3-滑动逻辑处理"><a href="#4-3-滑动逻辑处理" class="headerlink" title="4.3 滑动逻辑处理"></a>4.3 滑动逻辑处理</h2><p>基类中函数调用顺序是这个样子的：</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1968535-83f43e7c8c468504.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<h3 id="4-3-滑动逻辑处理"><a href="#4-3-滑动逻辑处理" class="headerlink" title="4.3 滑动逻辑处理"></a>4.3 滑动逻辑处理</h3><p>基类中函数调用顺序是这个样子的：<br><img src="http://upload-images.jianshu.io/upload_images/1968535-83f43e7c8c468504.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
 <p>很容易理解：</p>
 <ol>
 <li>根据目前offset确定起始、目标index和滑动比例（progress）</li>
@@ -462,78 +372,23 @@
 <li>根据cell的frame和滑动比做动画（下一篇的内容）</li>
 <li>重新布局Subviews（增加可见范围内Index对应的View，移除可见范围外的View）</li>
 </ol>
-<h3 id="scrollViewDidScroll"><a href="#scrollViewDidScroll" class="headerlink" title="scrollViewDidScroll"></a>scrollViewDidScroll</h3><p><img src="http://upload-images.jianshu.io/upload_images/1968535-90bdb6f92af5079e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<h4 id="scrollViewDidScroll"><a href="#scrollViewDidScroll" class="headerlink" title="scrollViewDidScroll"></a>scrollViewDidScroll</h4><p><img src="http://upload-images.jianshu.io/upload_images/1968535-90bdb6f92af5079e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
 <p>细心的朋友可能发现了，这里进行了两次index的计算，至于原因嘛，我们去看看具体实现代码好了。</p>
 <p><img src="http://upload-images.jianshu.io/upload_images/1968535-b610fe6dc94fe1e3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-<h3 id="configurePagerIndexByScrollProgress"><a href="#configurePagerIndexByScrollProgress" class="headerlink" title="configurePagerIndexByScrollProgress"></a>configurePagerIndexByScrollProgress</h3><p>作用：计算fromIndex、toIndex和滑动比</p>
-<p>实现：对offsetX/width分别取整数部分（index）和小数部分（滑动比）</p>
-<p>说明：方法名中对progress的计算就是取offsetX/width的小数部分</p>
+<h4 id="configurePagerIndexByScrollProgress"><a href="#configurePagerIndexByScrollProgress" class="headerlink" title="configurePagerIndexByScrollProgress"></a>configurePagerIndexByScrollProgress</h4><p>作用：计算fromIndex、toIndex和滑动比<br>实现：对offsetX/width分别取整数部分（index）和小数部分（滑动比）<br>说明：方法名中对progress的计算就是取offsetX/width的小数部分</p>
 <p><img src="http://upload-images.jianshu.io/upload_images/1968535-8d258f3ab07f1463.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-<p>计算progress的方法，是<strong>实时</strong>的。</p>
-<p>也就是说，只要offset发生了变化，该方法就会调用，子类处理progress的方法也会被调用。</p>
-<p>所以，适合用来处理需要实时反馈的事件，比如控制underLineView的Frame，调整Label的transform、color等。</p>
-<h3 id="configurePagerIndex"><a href="#configurePagerIndex" class="headerlink" title="configurePagerIndex"></a>configurePagerIndex</h3><p>作用：计算fromIndex、toIndex，在index发生改变的时候才会触发处理方法</p>
+<p>计算progress的方法，是<strong>实时</strong>的。<br>也就是说，只要offset发生了变化，该方法就会调用，子类处理progress的方法也会被调用。<br>所以，适合用来处理需要实时反馈的事件，比如控制underLineView的Frame，调整Label的transform、color等。</p>
+<h4 id="configurePagerIndex"><a href="#configurePagerIndex" class="headerlink" title="configurePagerIndex"></a>configurePagerIndex</h4><p>作用：计算fromIndex、toIndex，在index发生改变的时候才会触发处理方法</p>
 <p><img src="http://upload-images.jianshu.io/upload_images/1968535-1a92214c9aeb0379.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
 <p>至此，就很明了了。<br>configurePagerIndex虽然也是计算index，但是有一个阈值和比较的步骤存在，这样只有当offsetX的改变超过阈值并且index确实更改了之后，才会调用子类和代理的处理方法。<br>比如，修改collectionView的offset使currentIndex居中这样只需要在currentIndex改变的情况下处理的事情，就可以在该方法中调用。</p>
-<h1 id="五、总结"><a href="#五、总结" class="headerlink" title="五、总结"></a>五、总结</h1><p>回头看一下我们开篇提到的两个『坑』，TYPagerController是如何处理的：</p>
+<h2 id="五、总结"><a href="#五、总结" class="headerlink" title="五、总结"></a>五、总结</h2><p>回头看一下我们开篇提到的两个『坑』，TYPagerController是如何处理的：</p>
 <ul>
 <li>通过增加显示『窗口』和Cache，优化了ScrollView作为VC容器的性能</li>
 <li>基类根据不同情况（实时或者只处理一次），调用相应子类方法，分别处理ScrollView的滑动事件</li>
 </ul>
 <p>本篇已经将优化部分分析完了；<br>接下来的一篇，会着重分析子类中transition方法的实现。</p>
 
-      
-    </div>
-
-    <div>
-      
-        
-
-      
-    </div>
-
-    <div>
-      
-        
-
-      
-    </div>
-
-    <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/滑动导航/" rel="tag">#滑动导航</a>
-          
-        </div>
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2016/09/30/APP常见的滑动导航实现：TYPagerController源码分析（二）/" rel="next" title="APP常见的滑动导航实现：TYPagerController源码分析（二）">
-                <i class="fa fa-chevron-left"></i> APP常见的滑动导航实现：TYPagerController源码分析（二）
-              </a>
-            
-          </div>
-
-          <div class="post-nav-prev post-nav-item">
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
-  </article>
-
-
-
-    <div class="post-spread">
-      
-    </div>
+    
   </div>
 
 
@@ -565,17 +420,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview sidebar-panel ">
+      <section class="site-overview sidebar-panel  sidebar-panel-active ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.gif"
@@ -625,17 +471,6 @@
 
       </section>
 
-      
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-            
-              
-            
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#写在前面"><span class="nav-text">写在前面</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#一、总体介绍"><span class="nav-text">一、总体介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-滑动导航视图控制器的总体构成"><span class="nav-text">1.1 滑动导航视图控制器的总体构成</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-TYPagerController整体介绍"><span class="nav-text">1.2 TYPagerController整体介绍</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二、TYPagerController基类介绍"><span class="nav-text">二、TYPagerController基类介绍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三、代理协议"><span class="nav-text">三、代理协议</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#四、TYPagerController基类流程分析"><span class="nav-text">四、TYPagerController基类流程分析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#4-1-init"><span class="nav-text">4.1 init</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-2-Life-Cycle"><span class="nav-text">4.2 Life Cycle</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-1-updateContentViewIfNeeded："><span class="nav-text">4.2.1 updateContentViewIfNeeded：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-2-updateContentView："><span class="nav-text">4.2.2 updateContentView：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#小小结"><span class="nav-text">小小结</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-3-layoutSubViewsInContentView"><span class="nav-text">4.2.3 layoutSubViewsInContentView</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#addControllersInVisibleRange"><span class="nav-text">addControllersInVisibleRange</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#removeControllersOutOfVisibleRange"><span class="nav-text">removeControllersOutOfVisibleRange</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-3-滑动逻辑处理"><span class="nav-text">4.3 滑动逻辑处理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#scrollViewDidScroll"><span class="nav-text">scrollViewDidScroll</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#configurePagerIndexByScrollProgress"><span class="nav-text">configurePagerIndexByScrollProgress</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#configurePagerIndex"><span class="nav-text">configurePagerIndex</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#五、总结"><span class="nav-text">五、总结</span></a></li></ol></div>
-            
-          </div>
-        </section>
       
 
     </div>
@@ -739,10 +574,6 @@
 
 
   
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
-
-
 
   
 
